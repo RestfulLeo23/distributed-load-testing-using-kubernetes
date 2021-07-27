@@ -17,6 +17,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: locust-master
+  namespace: locust-servers
   labels:
     app: locust-master
 spec:

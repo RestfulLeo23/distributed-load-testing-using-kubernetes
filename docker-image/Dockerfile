@@ -14,7 +14,7 @@
 
 
 # Start with a base Python 3.7.2 image
-FROM python:3.7.2
+FROM harbor.rathabitat.club/docker-proxy-cache/library/python:3.7.2
 
 # Add the licenses for third party software and libraries
 ADD licenses /licenses

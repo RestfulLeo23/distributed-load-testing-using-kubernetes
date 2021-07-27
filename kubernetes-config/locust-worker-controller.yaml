@@ -16,6 +16,7 @@ apiVersion: "apps/v1"
 kind: "Deployment"
 metadata:
   name: locust-worker
+  namespace: locust-servers
   labels:
     name: locust-worker
 spec:
@@ -28,13 +29,15 @@ spec:
       labels:
         app: locust-worker
     spec:
+      imagePullSecrets:
+        - name: rathabitat-regcred
       containers:
         - name: locust-worker
-          image: gcr.io/[PROJECT_ID]/locust-tasks:latest
+          image: harbor.rathabitat.club/library/locust-tasks:latest
           env:
             - name: LOCUST_MODE
               value: worker
             - name: LOCUST_MASTER
               value: locust-master
             - name: TARGET_HOST
-              value: https://[TARGET_HOST]
+              value: https://dev.boozybakerytx.com

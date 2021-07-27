@@ -17,6 +17,7 @@ apiVersion: "apps/v1"
 kind: "Deployment"
 metadata:
   name: locust-master
+  namespace: locust-servers
   labels:
     name: locust-master
 spec:
@@ -29,14 +30,16 @@ spec:
       labels:
         app: locust-master
     spec:
+      imagePullSecrets:
+        - name: rathabitat-regcred
       containers:
         - name: locust-master
-          image: gcr.io/[PROJECT_ID]/locust-tasks:latest
+          image: harbor.rathabitat.club/library/locust-tasks:latest
           env:
             - name: LOCUST_MODE
               value: master
             - name: TARGET_HOST
-              value: https://[TARGET_HOST]
+              value: https://dev.boozybakerytx.com
           ports:
             - name: loc-master-web
               containerPort: 8089
