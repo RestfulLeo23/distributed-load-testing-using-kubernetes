@@ -15,23 +15,18 @@
 # limitations under the License.
 
 
-import uuid
-
-from datetime import datetime
-from locust import HttpLocust, TaskSet, task
+from locust_plugins.users import HttpUserWithResources
+from locust import HttpUser , TaskSet, task
 
 
-class MetricsTaskSet(TaskSet):
-    _deviceid = None
+class MetricsTaskSet(HttpUserWithResources):
+    # these values can be overridden
+    # bundle_resource_stats=False
+    # default_resource_filter=".*[^(js)]$"
+    @task
+    def include_resources_default(self):
+        self.client.get("/")
 
-    @task()
-    def homepage(self):
-        self.client.get('/')
-
-    @task()
-    def cocktailCakes(self):
-        self.client.get('/cocktail-cakes')
-
-
-class MetricsLocust(HttpLocust):
+class MetricsLocust(HttpUser):
     task_set = MetricsTaskSet
+
